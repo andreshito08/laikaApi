@@ -25,7 +25,7 @@ class UsuariosTest extends TestCase
 
     public function testgetUsuario()
     {
-        $this->json('GET', 'api/usuarios/32')
+        $this->json('GET', 'api/usuarios/50')
             ->assertStatus(200)
             ->assertJsonStructure([
                 "id",
@@ -38,30 +38,11 @@ class UsuariosTest extends TestCase
             ]);
     }
 
-    public function testActualizarUsuario()
-    {
-        $datos = [
-            "id"=>11,
-            "nombre" => "Juan1",
-            "identificacion" => "107413821",
-            "apellidos" => "Zapata1",
-            "email" => "doe@example13swe3.com",
-            "tipo_identificacion_cod" => "4"
-        ];
-
-        $this->json('PUT', 'api/usuarios/'.$datos["id"], $datos)
-            ->assertStatus(200)
-            ->assertJsonStructure([[
-                "mensaje",
-                "error"
-            ]]);
-    }
-
     public function testGuardarUsuario()
     {
         $datos = [
-            "nombre" => "Juan",
-            "identificacion" => "1074138",
+            "nombre" => "Test",
+            "identificacion" => "1174147243",
             "apellidos" => "Zapata",
             "email" => "",
             "tipo_identificacion_cod" => "4"
@@ -69,15 +50,34 @@ class UsuariosTest extends TestCase
 
         $this->json('POST', 'api/usuarios', $datos)
             ->assertStatus(201)
-            ->assertJsonStructure([[
+            ->assertJsonStructure([
                 "mensaje",
                 "error"
-            ]]);
+            ]);
+    }
+
+    public function testActualizarUsuario()
+    {
+        $datos = [
+            "id"=>32,
+            "nombre" => "Juan adwsd",
+            "identificacion" => "10741002",
+            "apellidos" => "Zapata eqweqw",
+            "email" => "text0011@example13swe3.com",
+            "tipo_identificacion_cod" => "4"
+        ];
+
+        $this->json('PUT', 'api/usuarios/32', $datos)
+            ->assertStatus(200)
+            ->assertJsonStructure([
+                "mensaje",
+                "error"
+            ]);
     }
 
     public function testEliminarUsuario()
     {
-        $this->json('DELETE', 'api/usuarios/8')
+        $this->json('DELETE', 'api/usuarios/53')
             ->assertStatus(200)
             ->assertJsonStructure([
                 "mensaje",

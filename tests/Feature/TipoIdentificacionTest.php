@@ -32,14 +32,39 @@ class TipoIdentificacionTest extends TestCase
     public function testGuardarTipoIdent()
     {
         $datos = [
-            "nombre" => "Holawwwww"
+            "nombre" => "MUNDO QWERqw"
         ];
 
         $this->json('POST', 'api/tipoidentificacion', $datos)
             ->assertStatus(201)
-            ->assertJsonStructure([[
+            ->assertJsonStructure([
                 "mensaje",
                 "error"
-            ]]);
+            ]);
+    }
+
+    public function testActualizarTipoIdent()
+    {
+        $datos = [
+            "id"=>1,
+            "nombre" => "TEST WSO"
+        ];
+
+        $this->json('PUT', 'api/tipoidentificacion/1', $datos)
+            ->assertStatus(200)
+            ->assertJsonStructure([
+                "mensaje",
+                "error"
+            ]);
+    }
+
+    public function testEliminarTipoIdent()
+    {
+        $this->json('DELETE', 'api/tipoidentificacion/43')
+            ->assertStatus(200)
+            ->assertJsonStructure([
+                "mensaje",
+                "error"
+            ]);
     }
 }

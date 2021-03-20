@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 class TipoIdentificacionController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Ver todos los recursos
      *
      * @return \Illuminate\Http\Response
      */
@@ -19,15 +19,15 @@ class TipoIdentificacionController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
+     * Crear un recurso
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function create(Request $request)
     {
         //Validar campos
         $validacion = Validator::make($request->all(), [
-            'nombre' => 'required|max:25|unique:TipoIdentificacion',
+            'nombre' => 'regex:/^[\pL\s\-]+$/u|required|max:25',
         ]);
 
         if ($validacion->fails())
@@ -40,8 +40,8 @@ class TipoIdentificacionController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
+     * Ver un recurso
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -56,9 +56,10 @@ class TipoIdentificacionController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualizar  un recurso
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request,$id)
@@ -70,7 +71,7 @@ class TipoIdentificacionController extends Controller
         //Validar campos
         $validacion = Validator::make($request->all(), [
             'id' => 'required|numeric',
-            'nombre' => 'required|max:25|unique:TipoIdentificacion',
+            'nombre' => 'string|required|max:25',
         ]);
 
         if ($validacion->fails())
@@ -90,8 +91,10 @@ class TipoIdentificacionController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
+     * Eliminar un recurso
+     * ESTE RECURSO NO DEBRIA EXISTIR POR INTEGRIDAD, PERO DE DESARROLLO PARA ILUSTRAR EL EJERCICIO
+     * @param  \Illuminate\Http\Request  $request
+     * @param $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request,$id)

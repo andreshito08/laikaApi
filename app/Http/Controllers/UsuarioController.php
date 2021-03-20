@@ -19,19 +19,24 @@ class UsuarioController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
+     * Crear un recurso
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function create(Request $request)
     {
+        //Maroma :)
+        $valid = "max:50";
+        if($request->input("email")!=null){
+            $valid = 'email|max:50';
+        }
         //Validar campos
         $validacion = Validator::make($request->all(), [
             'identificacion' => 'required|numeric',
             'tipo_identificacion_cod' => 'required|numeric',
-            'nombre' => 'required|max:25|alpha',
-            'apellidos' => 'required|max:50|alpha',
-            'email' => 'max:50'
+            'nombre' => 'required|max:25|regex:/^[\pL\s\-]+$/u',
+            'apellidos' => 'required|max:50|regex:/^[\pL\s\-]+$/u',
+            'email' => $valid
         ]);
 
         if ($validacion->fails())
@@ -44,9 +49,8 @@ class UsuarioController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Usuario  $usuario
+     * Ver un recurso
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -61,10 +65,10 @@ class UsuarioController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualizar  un recurso
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -73,14 +77,19 @@ class UsuarioController extends Controller
             return response()->json(["mensaje"=>"","error"=>true],400);
         }
 
+        //Maroma :)
+        $valid = "max:50";
+        if($request->input("email")!=null){
+            $valid = 'email|max:50';
+        }
         //Validar campos
         $validacion = Validator::make($request->all(), [
             'id' => 'required|numeric',
             'identificacion' => 'required|numeric',
             'tipo_identificacion_cod' => 'required|numeric',
-            'nombre' => 'required|max:25|alpha',
-            'apellidos' => 'required|max:50|alpha',
-            'email' => 'max:50'
+            'nombre' => 'required|max:25|regex:/^[\pL\s\-]+$/u',
+            'apellidos' => 'required|max:50|regex:/^[\pL\s\-]+$/u',
+            'email' => $valid
         ]);
 
         if ($validacion->fails())
@@ -97,9 +106,10 @@ class UsuarioController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Usuario  $usuario
+     * Eliminar un recurso
+     * ESTE RECURSO NO DEBRIA EXISTIR POR INTEGRIDAD, PERO DE DESARROLLO PARA ILUSTRAR EL EJERCICIO
+     * @param  \Illuminate\Http\Request  $request
+     * @param $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
