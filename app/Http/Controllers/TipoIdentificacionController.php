@@ -71,7 +71,7 @@ class TipoIdentificacionController extends Controller
         //Validar campos
         $validacion = Validator::make($request->all(), [
             'id' => 'required|numeric',
-            'nombre' => 'string|required|max:25',
+            'nombre' => 'regex:/^[\pL\s\-]+$/u|required|max:25',
         ]);
 
         if ($validacion->fails())
